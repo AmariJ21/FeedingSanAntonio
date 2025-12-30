@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feeding San Antonio - Fighting Hunger Together</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --fiesta-gold: #FFD700;
+            --concha-pink: #FFC0CB;
+            --warm-red: #E94E4E;
+            --deep-teal: #00796B;
+            --soft-beige: #FFF9E6;
+            --text-dark: #2C2C2C;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3 {
+            color: var(--deep-teal);
+            font-weight: 700;
+        }
+
+        h1 {
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            line-height: 1.2;
+            margin-bottom: 1rem;
+        }
+
+        h2 {
+            font-size: clamp(2rem, 4vw, 3rem);
+            margin-bottom: 1.5rem;
+        }
+
+        h3 {
+            font-size: clamp(1.3rem, 3vw, 1.8rem);
+            margin-bottom: 1rem;
+        }
+
+        @keyframes swoopInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-100px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes swoopInRight {
+            from {
+                opacity: 0;
+                transform: translateX(100px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-left {
+            opacity: 0;
+            animation: swoopInLeft 0.8s ease-out forwards;
+        }
+
+        .animate-right {
+            opacity: 0;
+            animation: swoopInRight 0.8s ease-out forwards;
+        }
+
+        .animate-fade {
+            opacity: 0;
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+
+        .hidden {
+            opacity: 0;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background: var(--fiesta-gold);
+            color: var(--text-dark);
+            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
+        }
+
+        .btn-primary:hover {
+            background: #FFC700;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(255, 215, 0, 0.4);
+        }
+
+        .btn-secondary {
+            background: var(--warm-red);
+            color: white;
+            box-shadow: 0 4px 15px rgba(233, 78, 78, 0.3);
+        }
+
+        .btn-secondary:hover {
+            background: #D63E3E;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(233, 78, 78, 0.4);
+        }
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: linear-gradient(135deg, var(--fiesta-gold) 0%, var(--concha-pink) 100%);
+            position: relative;
+            overflow: hidden;
+            padding: 2rem;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            top: -150px;
+            right: -150px;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+            bottom: -100px;
+            left: -100px;
+        }
+
+        .hero-content {
+            max-width: 900px;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .hero h3 {
+            color: var(--deep-teal);
+            margin-bottom: 2.5rem;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        section {
+            padding: 5rem 2rem;
+            position: relative;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .problem {
+            background: var(--soft-beige);
+            position: relative;
+        }
+
+        .problem::before {
+            content: '';
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            background: var(--deep-teal);
+            opacity: 0.05;
+            border-radius: 50%;
+            top: 50px;
+            right: -100px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: var(--warm-red);
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 1.2rem;
+            color: var(--deep-teal);
+            font-weight: 600;
+        }
+
+        .programs {
+            background: var(--soft-beige);
+        }
+
+        .program-item {
+            padding: 3rem 0;
+            position: relative;
+        }
+
+        .program-item:nth-child(even) {
+            background: var(--concha-pink);
+            margin: 0 -2rem;
+            padding-left: 2rem;
+            padding-right: 2rem;
+        }
+
+        .program-item h3 {
+            margin-bottom: 1rem;
+        }
+
+        .program-item p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            max-width: 800px;
+        }
+
+        .program-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--fiesta-gold);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .help {
+            background: var(--deep-teal);
+            color: white;
+        }
+
+        .help h2, .help h3 {
+            color: white;
+        }
+
+        .help-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        .help-item {
+            padding: 2rem;
+            border-left: 4px solid var(--fiesta-gold);
+        }
+
+        .help-item h3 {
+            margin-bottom: 1rem;
+        }
+
+        .help-item p {
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+
+        .trust {
+            background: linear-gradient(180deg, var(--soft-beige) 0%, var(--concha-pink) 100%);
+        }
+
+        .trust-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        .trust-item h3 {
+            margin-bottom: 1rem;
+        }
+
+        .testimonial {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .testimonial p {
+            font-style: italic;
+            margin-bottom: 1rem;
+        }
+
+        .testimonial-author {
+            font-weight: 600;
+            color: var(--deep-teal);
+        }
+
+        footer {
+            background: var(--text-dark);
+            color: white;
+            padding: 3rem 2rem 1.5rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            color: var(--fiesta-gold);
+            margin-bottom: 1rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            background: var(--deep-teal);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background: var(--fiesta-gold);
+            color: var(--text-dark);
+            transform: translateY(-3px);
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            padding: 0.8rem;
+            margin-bottom: 1rem;
+            border: none;
+            border-radius: 8px;
+            font-family: inherit;
+        }
+
+        .contact-form button {
+            width: 100%;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .img-placeholder {
+            background: linear-gradient(135deg, #e0e0e0 0%, #f5f5f5 100%);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #999;
+            font-size: 1.2rem;
+            min-height: 300px;
+            margin: 2rem 0;
+        }
+
+        @media (max-width: 768px) {
+            section {
+                padding: 3rem 1.5rem;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn {
+                width: 100%;
+                max-width: 300px;
+            }
+
+            .program-item:nth-child(even) {
+                margin: 0 -1.5rem;
+                padding-left: 1.5rem;
+                padding-right: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <section class="hero">
+        <div class="hero-content">
+            <h1 class="hidden animate-left">Fighting Hunger, Feeding Hope in San Antonio</h1>
+            <h3 class="hidden animate-fade"></h3>
+            <div class="hero-buttons hidden animate-fade">
+                <a href="#" class="btn btn-primary">Donate Now</a>
+                <a href="#" class="btn btn-secondary">Volunteer</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="problem">
+        <div class="container">
+            <h2 class="hidden animate-left">The Problem: Why It Matters</h2>
+            <p class="hidden animate-right" style="font-size: 1.2rem; margin-bottom: 2rem;">Every day, around 250,000 people in San Antonio go hungry, and many of them are children, seniors, and families who never expected to be in this situation. Hunger takes away more than a meal, because it slowly wears down a person's dignity, hope, and sense of security. When we choose to care and give, we help restore that hope and remind people that their lives truly matter.</p>
+            
+            <div class="stats-grid">
+                <div class="stat-item hidden animate-fade">
+                    <span class="stat-number" data-target="250000">0</span>
+                    <span class="stat-label">People Facing Hunger</span>
+                </div>
+                <div class="stat-item hidden animate-fade">
+                    <span class="stat-number" data-target="35">0</span>
+                    <span class="stat-label">% Children Food Insecure</span>
+                </div>
+                <div class="stat-item hidden animate-fade">
+                    <span class="stat-number" data-target="500">0</span>
+                    <span class="stat-label">Meals Distributed Daily</span>
+                </div>
+            </div>
+
+            <p class="hidden animate-left" style="font-size: 1.1rem; margin-top: 3rem;">Hunger doesn't discriminate. It affects our homeless neighbors sleeping under bridges, working families choosing between rent and groceries, and seniors on fixed incomes. In San Antonio, the gap between need and resources grows wider each day. Your donation directly feeds those who have nowhere else to turn, providing nutritious meals and restoring dignity to lives touched by hardship.</p>
+        </div>
+    </section>
+
+    <section class="programs">
+        <div class="container">
+            <h2 class="hidden animate-left">Our Programs & Impact</h2>
+            
+            <div class="program-item hidden animate-left">
+                <div class="program-icon">🎁</div>
+                <h3>Emergency Food Assistance</h3>
+                <p>When someone is facing hunger, they cannot wait days or weeks for help. Our Emergency Food Assistance program provides immediate meals so people in crisis can feel relief, comfort, and the reassurance that they are not alone. Your support helps us respond the moment hunger appears, turning fear into hope and compassion into action.</p>
+            </div>
+
+            <div class="program-item hidden animate-right">
+                <div class="program-icon">👨‍👩‍👧</div>
+                <h3>Family Nutrition Programs</h3>
+                <p>Families shouldn't have to choose between paying bills and feeding their children, yet that's the impossible decision many face daily. Our Family Nutrition Programs provide consistent food support, nutritional education, and resources to help families build long-term food security. We serve everyone from single parents working multiple jobs to homeless families seeking stability, ensuring no one falls through the cracks.</p>
+            </div>
+
+            <div class="program-item hidden animate-left">
+                <div class="program-icon">🏫</div>
+                <h3>School Meal Support</h3>
+                <p>Hungry children cannot focus, learn, or dream about their future. Our School Meal Support program ensures that every child, including those from homeless families living in shelters or cars, receives nutritious breakfast and lunch during the school week. We also provide weekend food packs so children don't go hungry when school is out. Education begins with a full stomach.</p>
+            </div>
+
+            <div class="program-item hidden animate-right">
+                <div class="program-icon">👵</div>
+                <h3>Senior Nutrition Services</h3>
+                <p>Our seniors deserve to live with dignity, not struggle to afford food after a lifetime of contribution. Many elderly residents face impossible choices between medication and meals, while homeless seniors are among our most vulnerable population. Our Senior Nutrition Services delivers hot meals directly to homebound seniors and provides food assistance at community centers, ensuring our elders never go hungry or feel forgotten.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="help">
+        <div class="container">
+            <h2 class="hidden animate-fade">How You Can Help</h2>
+            <p class="hidden animate-fade" style="font-size: 1.2rem; margin-bottom: 2rem;">Your generosity creates immediate impact. Whether feeding a homeless veteran, a struggling family, or a hungry child, every dollar you give becomes a meal, a moment of relief, and a message that someone cares. Together, we can end hunger in San Antonio one person, one family, one community at a time.</p>
+            
+            <div class="help-grid">
+                <div class="help-item hidden animate-left">
+                    <h3>💝 Make a Donation</h3>
+                    <p>Every contribution directly feeds those in need. Your donation provides nutritious meals to homeless individuals, working families, children, and seniors throughout San Antonio. No amount is too small when someone is hungry.</p>
+                    <p style="font-size: 2rem; font-weight: 700; color: var(--fiesta-gold);">$50 = 200 Meals</p>
+                    <a href="#" class="btn btn-primary">Donate Today</a>
+                </div>
+
+                <div class="help-item hidden animate-fade">
+                    <h3>🤝 Volunteer With Us</h3>
+                    <p>Join our team of compassionate volunteers who prepare and distribute meals, sort donations, and serve our community with kindness. Your time and care make a real difference in the lives of those facing hunger and homelessness.</p>
+                    <p style="font-size: 2rem; font-weight: 700; color: var(--fiesta-gold);">500+ Volunteers</p>
+                    <a href="#" class="btn btn-secondary">Join Our Team</a>
+                </div>
+
+                <div class="help-item hidden animate-right">
+                    <h3>🏢 Corporate Partnerships</h3>
+                    <p>Partner with us to create lasting change in San Antonio. Through food drives, employee engagement programs, and financial support, your business can help feed thousands of hungry neighbors and strengthen our community.</p>
+                    <p style="font-size: 2rem; font-weight: 700; color: var(--fiesta-gold);">50+ Partners</p>
+                    <a href="#" class="btn btn-primary">Partner With Us</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="trust">
+        <div class="container">
+            <h2 class="hidden animate-left">Trust & Community</h2>
+            
+            <div class="trust-grid">
+                <div class="hidden animate-fade">
+                    <h3>About Us</h3>
+                    <p>For over two decades, Feeding San Antonio has been the lifeline for our city's most vulnerable residents. We believe that no one—not a child, not a senior, not someone experiencing homelessness—should go to bed hungry. Through partnerships with local organizations, businesses, and thousands of dedicated volunteers, we distribute millions of meals annually.</p>
+                    <p>Our mission is simple: feed the hungry, restore dignity, and build a stronger San Antonio where everyone has access to nutritious food. We work tirelessly to serve all who need us, meeting people where they are with compassion and respect.</p>
+                </div>
+
+                <div class="hidden animate-fade">
+                    <h3>What People Say</h3>
+                    <div class="testimonial">
+                        <p>"After losing my job and my apartment, I didn't know where to turn. Feeding San Antonio gave me hot meals and treated me with respect when I had nothing. They helped me get back on my feet."</p>
+                        <span class="testimonial-author">— Carlos M.</span>
+                    </div>
+                    <div class="testimonial">
+                        <p>"As a single mom working two jobs, some weeks I couldn't afford groceries. This organization made sure my kids never went to bed hungry. They saved us during our hardest time."</p>
+                        <span class="testimonial-author">— Jennifer L.</span>
+                    </div>
+                </div>
+
+                <div class="hidden animate-fade">
+                    <h3>Our Partners</h3>
+                    <a href="fusionweb.dev" target="_blank" rel="noopener noreferrer">
+                    <img src="images/FusionLogo.png" alt="Partner Logos" style="width: 100%; max-width: 600px; height: auto; border-radius: 15px;">
+                    </a>
+<p style="margin-top: 1rem;">We're proud to collaborate with local businesses, food suppliers, community organizations, and government agencies across San Antonio. Together, we create a network of care that reaches every corner of our city, ensuring no one faces hunger alone.</p>
+            </div>
+                
+                
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Feeding San Antonio</h3>
+                <p>Fighting hunger in our community by serving the homeless, families, children, and seniors with dignity, compassion, and nutritious meals. Together, we can end hunger in San Antonio.</p>
+                <div class="social-links">
+                    <a href="#" aria-label="Facebook">f</a>
+                    <a href="#" aria-label="Twitter">𝕏</a>
+                    <a href="#" aria-label="Instagram">📷</a>
+                    <a href="#" aria-label="LinkedIn">in</a>
+                </div>
+            </div>
+
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <p><a href="#" style="color: white; text-decoration: none;">About Us</a></p>
+                <p><a href="#" style="color: white; text-decoration: none;">Programs</a></p>
+                <p><a href="#" style="color: white; text-decoration: none;">Get Involved</a></p>
+                <p><a href="#" style="color: white; text-decoration: none;">News & Events</a></p>
+            </div>
+
+            <div class="footer-section">
+                <h3>Contact Us</h3>
+                <form class="contact-form">
+                    <input type="text" placeholder="Your Name" required>
+                    <input type="email" placeholder="Your Email" required>
+                    <textarea rows="3" placeholder="Your Message" required></textarea>
+                    <button type="submit" class="btn btn-primary">Send Message</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2024 Feeding San Antonio. All rights reserved. | Tax ID: XX-XXXXXXX</p>
+        </div>
+    </footer>
+
+    <script>
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.remove('hidden');
+                    
+                    if (entry.target.classList.contains('stat-item')) {
+                        const counter = entry.target.querySelector('.stat-number');
+                        animateCounter(counter);
+                    }
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.hidden').forEach(el => observer.observe(el));
+
+        function animateCounter(element) {
+            const target = parseInt(element.dataset.target);
+            const duration = 2000;
+            const increment = target / (duration / 16);
+            let current = 0;
+
+            const updateCounter = () => {
+                current += increment;
+                if (current < target) {
+                    element.textContent = Math.floor(current).toLocaleString();
+                    requestAnimationFrame(updateCounter);
+                } else {
+                    element.textContent = target.toLocaleString();
+                }
+            };
+
+            updateCounter();
+        }
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+
+        document.querySelector('.contact-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('Thank you for your message! We will get back to you soon.');
+            e.target.reset();
+        });
+    </script>
+</body>
+</html>
